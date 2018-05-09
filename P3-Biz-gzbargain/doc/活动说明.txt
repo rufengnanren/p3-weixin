@@ -1,0 +1,33 @@
+《微信砍价》
+活动开发地址：
+   1.活动入口地址（测试数据）
+     http://localhost:8080/P3-Web/gzbargain/toIndex.do?actId=actgzbargain00001&openid=${openid}&subscribe=${subscribe}
+     http://localhost:8080/P3-Web/gzbargain/toIndex.do?actId=actgzbargain00001&openid=oR0jFt_DTsAUJebWqGeq3A1VWfRw&subscribe=1
+      
+   2.活动分享地址
+     http://localhost:8080/P3-Web/gzbargain/toIndex.do?actId=actgzbargain00001&openid=oR0jFt_DTsAUJebWqGeq3A1VWfRw1&subscribe=1&fxOpenid=oR0jFt_DTsAUJebWqGeq3A1VWfRw
+   3.生成Author2.0地址
+     http://www.jeewx.com/jeewx/weixinLinksucaiController.do?link&id=8a792db350175bad0150511689f71414
+     
+   4.正式推广活动入口（需带上: 微信原始ID\活动ID）
+     http://www.jeewx.com/jeewx/weixinLinksucaiController.do?link&id=8a792db350175bad0150511689f71414&jwid=${微信原始ID}&actId={活动ID}
+
+
+说明：1.微信参数如何传递给活动？
+                    插件式开发框架，为一个独立的HTML5开发项目，与微信没有直接交互，所以活动所需要的微信参数，需要通过Jeewx服务器端传递过来，举例：{微信原始ID}{活动ID}{粉丝微信ID}{粉丝关注状态}等。
+      2.如何实现微信朋友圈转发机制？
+		 Jeewx官方提供获取签名方法，底层已经封装好，大家调用即可：WeiXinHttpUtil.getSignature(request,jwid)
+	     Controller后台代码书写如下：
+		 第一部分：获取签名方法
+			 velocityContext.put("signature", WeiXinHttpUtil.getSignature(request,jwid));
+		 第二部分：获取其他所需参数
+			 velocityContext.put("nonceStr", WeiXinHttpUtil.nonceStr);  //固定
+			 velocityContext.put("timestamp", WeiXinHttpUtil.timestamp);//固定
+			 velocityContext.put("hdUrl", WeiXinHttpUtil.getOauth2Url("gzbargain", jwid, actId));//jwid,actId为动态参数，gzbargain：文件名
+			 velocityContext.put("appId", appid); 				        //动态参数
+	  3.每个插件活动，必须有一个唯一的活动入口地址，由Jeewx官方生成，配置在自定义属性文件{project_name}.properties里面
+	         hdUrl=http://www.jeewx.com/jeewx/weixinLinksucaiController.do?link&id=8a792db34f3a9e87014f3aa33d560013
+			 
+注意：
+      1.链接里面get方式不能带中文	
+      2.更多资料请登录官方论坛查看： www.jeecg.org

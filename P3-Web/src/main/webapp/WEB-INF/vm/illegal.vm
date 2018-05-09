@@ -1,0 +1,13 @@
+#* @vtlvariable name="resources" type="java.lang.String[]" *#
+<div  class="col-md-10" style="width:100%">
+	<div class="panel panel-default">
+        <div class="container" >
+        	<div class="row Error" style="min-height:550px; height:550px;">
+        		<h3><b>请求失败!</b> 您没有权限访问该页面，该页面需要以下权限！</h3>
+                #foreach($resource in $resources)
+        		<p>$resource</p>
+                #end
+            </div>
+        </div>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+#* @vtlvariable name="exception" type="java.lang.Exception" *#
+#* @vtlvariable name="result" type="com.jd.common.web.result.Result" *#
+<div  class="col-md-10" style="width:98%">
+	<div class="panel panel-default minHeight">
+	  	<div id="top" class="panel-heading">错误页面</div>
+    	  	<div class="panel-body">
+            	<div class="row Error" style="min-height:550px; height:550px;">
+            		#if($exception)
+                        #if($!exception.class.simpleName=="NoSuchMethodException")
+                            <p>$!response.setStatus(404)</p>
+                            <p>404! 您请求的内容不存在</p>
+                        #else
+                            <p>$exception.printStackTrace()</p>
+                    		<p>出错了：  $exception.message</p>
+                        #end
+                    #elseif($result)
+                        #if($result.resultCode)
+                            <p>#showSimpleError()</p>
+                        #else
+                    		<p>系统错误</p>
+                        #end
+                    #end
+            		<p><a href="javascript:history.go(-1);">返回上一页</a></p>
+                </div>
+    		</div>
+		</div>
+	</div>
+</div>
